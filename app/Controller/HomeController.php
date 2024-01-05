@@ -22,6 +22,22 @@ class HomeController {
 
     }
 
+    public function Updatetask(){
+        if (isset($_POST['submit'])) {
+          extract($_POST);
+          $task = new HomeModel();
+          $task->setNome($nom);
+          $task->setDescription($description);
+          $task->setEtat($etat);
+          $task->setDate($date);
+          if($task->Updatetask($id))
+          {
+            $this->getAllTAsk();
+          }
+        }
+  
+      }
+
 
 
     public function getAllTAsk(){

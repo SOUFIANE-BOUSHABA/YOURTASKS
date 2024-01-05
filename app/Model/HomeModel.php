@@ -60,6 +60,21 @@ return $this->date;
         }
   }
 
+  public function Updatetask($id){
+       
+    $conn = $this->db->getConnection();
+
+    $sql = "UPDATE `tasks`   SET `name` = ? , `description` = ? ,  `status` = ? , `deadline` = ?  WHERE `id` = ? ";
+
+    $stmt = $conn->prepare($sql);
+    $result=  $stmt->execute([$this->getNom(), $this->getDescription(), $this->getEtat(), $this->getDate() , $id]);
+    if($result){
+        return true;
+    }
+   
+
+}
+
 
 
   public function findAll() {
