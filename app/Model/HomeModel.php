@@ -98,6 +98,20 @@ public function deletTask($id) {
     }
 }
 
+
+
+public function searchByName($searchTerm) {
+    $conn = $this->db->getConnection();
+    $sql = "SELECT * FROM `tasks` WHERE `name` LIKE ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute(["%$searchTerm%"]);
+    $result = $stmt->fetchAll(PDO::FETCH_OBJ);
+    if ($result) {
+        return $result;
+    }
+}
+
+
 }
 
 

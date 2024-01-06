@@ -57,9 +57,11 @@
 
             <h2>Liste des Tâches</h2>
 
-            <div class="search d-flex">
-                <button class="btn btn-primary">search</button> <input type="text">
-            </div>
+           
+        <div class="search d-flex">
+            <input type="text" id="searchInput" onkeyup="search()" placeholder="Search by name">
+        </div>
+        
         </div>
 
         <table class="table table-bordered table-striped">
@@ -73,7 +75,7 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="users">
                 <?php foreach ($users as $user) :  ?>
                 <tr>
                     <td><?= $user->id ?></td>
@@ -92,7 +94,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addTaskModalLabel">Ajouter une Tâche</h5>
+                                <h5 class="modal-title" id="addTaskModalLabel">modifier une Tâche</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
@@ -121,7 +123,7 @@
                                         <input type="date" class="form-control" id="date" name="date" value="<?= $user->deadline ?>" placeholder="date"
                                             required>
                                     </div>
-                                    <button type="submit" name="submit" class="btn btn-primary">Ajouter</button>
+                                    <button type="submit" name="submit" class="btn btn-primary">save</button>
                                 </form>
                             </div>
                         </div>
@@ -132,9 +134,50 @@
         </table>
     </div>
 
+
+    <script>
+            
+
+            function search() {
+               
+                    let input = document.getElementById("searchInput").value;
+                    let url = `?uri=home/search&search=${encodeURIComponent(input)}`;
+
+                    let xml = new XMLHttpRequest();
+                    xml.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            document.getElementById("users").innerHTML = xml.responseText;
+                        }
+                    };
+                    xml.open("GET", url, true);
+                    xml.send();
+              
+            }
+
+            function deletTask(id){
+
+                let url = `?uri=home/deletTask/${id}`;
+                let xml = new XMLHttpRequest();
+                    xml.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                          
+                        
+                        }
+                    };
+                    xml.open("GET", url, true);
+                    xml.send();
+              
+            }
+
+          
+
+        </script>
+
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 
+    
 </body>
 
 </html>

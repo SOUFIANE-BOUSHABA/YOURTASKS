@@ -17,9 +17,10 @@ class HomeController {
         $task->setDescription($description);
         $task->setEtat($etat);
         $task->setDate($date);
-        $task->save();
+        if($task->save()){
+                $this->index();
+        }
       }
-
     }
 
     public function Updatetask(){
@@ -32,7 +33,7 @@ class HomeController {
           $task->setDate($date);
           if($task->Updatetask($id))
           {
-            $this->getAllTAsk();
+            $this->index();
           }
         }
   
@@ -52,6 +53,20 @@ class HomeController {
         $res = $userdel->deletTask($id);
         if($res){
             $this->getAllTAsk();
+        }
+    }
+
+
+    public function search() {
+        if (isset($_GET['search'])) {
+            $searchTerm = $_GET['search'];
+            $taskModel = new HomeModel();
+            $searchResults = $taskModel->searchByName($searchTerm);
+        if($searchResults){
+            include_once '../app/View/search.php';
+            exit(); 
+        }
+            
         }
     }
 }
