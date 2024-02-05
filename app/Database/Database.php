@@ -4,6 +4,8 @@ use PDO;
 use PDOException;
 
 class Database {
+
+    private static $instance = null;
     private $host = "localhost";
     private $user = "root";
     private $password = "";
@@ -19,6 +21,17 @@ class Database {
         } catch (PDOException $e) {
             die("Connection failed: " . $e->getMessage());
         }
+    }
+
+
+    public static function getInstance()
+    {
+      if(!self::$instance)
+      {
+        self::$instance = new Database();
+      }
+     
+      return self::$instance;
     }
 
     public function getConnection() {

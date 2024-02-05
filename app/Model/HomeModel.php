@@ -17,7 +17,7 @@ class HomeModel {
   
 
     public function __construct() {
-        $this->db = new Database();
+        $this->db = Database::getInstance();
     }
    public function setNome($nom) {
     $this->nom = $nom;
